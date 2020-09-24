@@ -17,7 +17,7 @@ public class StefDefination extends Base {
 	@When("User has enter the from to onbard date and return date and select traveler and click search button")
 	public void user_has_enter_the_from_to_onbard_date_and_return_date_and_select_traveler_and_click_search_button() throws InterruptedException {
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		Home h= new Home();
 		h.getFrom().clear();
 		Thread.sleep(5000);
@@ -37,18 +37,20 @@ public class StefDefination extends Base {
 			}
 		}
 		click(h.getFlightSearch());
-		List<WebElement> time = driver.findElements(By.className("time-distance"));
-		for(int i=0;i<=time.size()-1;i++) {
-			WebElement time1 = time.get(i);
-			System.out.println("Total Flights\t"+time.size());
-			System.out.println("Flights Timing\t"+time1.getText());
-		}
+		System.out.println("Flight Search Done");
+		WebElement wTime = driver.findElement(By.xpath("(//span[@class='time-distance'])[1]"));
+		System.out.println(wTime.getText());
 	   
 	}
 
 	@Then("user getting corresponding flights")
 	public void user_getting_corresponding_flights() {
-	   
+		List<WebElement> time = driver.findElements(By.xpath("//span[@class='time-distance']"));
+		System.out.println("Total Flights\t"+time.size());
+		for(int i=0;i<=time.size()-1;i++) {
+			WebElement time1 = time.get(i);
+			System.out.println("Flights Timing\t"+time1.getText());
+		}
 	}
 
 
