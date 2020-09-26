@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import Base.Base;
 import POM.Home;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 
 public class Hooks extends Base{
@@ -18,6 +19,11 @@ public class Hooks extends Base{
 		Home h= new Home();
 		click(h.getPannerClose());
 
+	}
+	
+	@After
+	public void closeBrowser() {
+		driver.quit();
 	}
 
 }
