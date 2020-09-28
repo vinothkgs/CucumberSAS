@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 
 import Base.Base;
 import POM.Home;
+import POM.Traveler;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -20,7 +21,7 @@ public class StefDefination extends Base {
 	@When("User has enter the from to onbard date and return date and select traveler and click search button")
 	public void user_has_enter_the_from_to_onbard_date_and_return_date_and_select_traveler_and_click_search_button() throws InterruptedException {
 		
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
 		h.getFrom().clear();
 		Thread.sleep(5000);
@@ -57,18 +58,21 @@ public class StefDefination extends Base {
 	}
 	@When("user has enter the from to and provide date")
 	public void user_has_enter_the_from_to_and_provide_date() throws InterruptedException {
+		/*driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);*/
 		System.out.println("flight search functionality");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		click(h.getOneWay());
 		h.getFrom().clear();
 		fill(h.getFrom(), "oslo");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		fill(h.getTo(), "riga");
-		Thread.sleep(4000);
+		Thread.sleep(3000);
 		click(h.getOutbound());
-		List<WebElement> tableRow = driver.findElements(By.tagName("tr"));
+		WebElement calender = driver.findElement(By.xpath("//div[@class='left-calendar pad-r-5 pull-left large-6  medium-6 small-6 col']//following-sibling::table"));
+		List<WebElement> tableRow = calender.findElements(By.tagName("tr"));
 		for(int i=0;i<=tableRow.size()-1;i++) {
-			List<WebElement> tableData = driver.findElements(By.tagName("td"));
+			WebElement row = tableRow.get(i);
+			List<WebElement> tableData = row.findElements(By.tagName("td"));
 			for(int j=0;j<=tableData.size()-1;j++) {
 				WebElement data = tableData.get(j);
 				String text = data.getText();
@@ -76,11 +80,12 @@ public class StefDefination extends Base {
 				if(text.equals("30")) {
 					
 						data.click();
-						break;
+						
 					
 				}
 			}
 		}
+		Thread.sleep(2000);
 		//click(h.getPassengers());
 		click(h.getAdultAdd());
 		click(h.getChildAdd());
@@ -91,34 +96,101 @@ public class StefDefination extends Base {
 	@Then("user getting correct flight list")
 	public void user_getting_correct_flight_list() throws InterruptedException {
 		List<WebElement> flightList = driver.findElements(By.xpath("//span[@class='time-distance']"));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		/* System.out.println("Number of Flight"+"\t"+flightList.size());
 		 for(int i=0;i<=flightList.size()-1;i++) {
 				WebElement time1 = flightList.get(i);
 				System.out.println("Flights Timing\t"+time1.getText());
 			}*/
-		/*List<WebElement> table = driver.findElements(By.tagName("table"));
-		for(int f=0;f<=table.size();f++) {
-		List<WebElement> th = driver.findElements(By.tagName("th"));
-		for(int i=0;i<=th.size();i++) {*/
-			List<WebElement> tr = driver.findElements(By.tagName("tr"));
-			for(int j=0;j<=tr.size();j++) {
-				List<WebElement> td = driver.findElements(By.tagName("td"));
+		WebElement table = driver.findElement(By.xpath("//table[@class='upsell-table sticky-table-head table new-card']"));
+		
+			List<WebElement> tr = table.findElements(By.tagName("tr"));
+			System.out.println("Table Row=="+tr.size());
+			for(int j=0;j<=tr.size()-1;j++) {
+				WebElement trow = tr.get(j);
+				System.out.println("------------------------------------");
+				List<WebElement> td = trow.findElements(By.tagName("td"));
 				for(int k=0;k<=td.size()-1;k++) {
 					WebElement tdata = td.get(k);
 					System.out.println(tdata.getText());
-					driver.findElement(By.xpath("(//div[@class='padding-t-17 padding-t-4'])[1]")).click();
+					if(tdata.getText().equals("€197,82")) 
+						tdata.click();
 					}
-				}
-			/*}
-		}*/
-		/*WebElement go = driver.findElement(By.xpath("(//span[@aria-hidden='true'])[6]"));
-		go.click();*/
+				
+			}
+			
+			driver.findElement(By.xpath("//button[@id='return-button-cart']")).click();
+			}
+			
 		
-		Thread.sleep(5000);
-		driver.findElement(By.xpath("//button[@id='return-button-cart']")).click();
-		}
-	
+		
+			
+		
+	@Then("user has enter the traveler information")
+	public void user_has_enter_the_traveler_information() throws InterruptedException {
+		//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	   Traveler t= new Traveler();
+	   fill(t.getFirstName(), "vinoth");
+	   fill(t.getLastName(), "kumar");
+	   dropdown(t.getGender(), "Male");
+	   fill(t.getEmail(), "vinoth@kgs.com");
+	   click(t.getMobile());
+	   fill(t.getMobile(), "9597359037");
+	   Thread.sleep(8000);
+	   scrollDown(t.getDOBC2());
+	   fill(t.getFirstNameA1(), "suba");
+	   fill(t.getLastNameA1(), "vinoth");
+	  
+	   dropDown(t.getGenderA1(), "Male");
+	   
+	   
+	   fill(t.getFirstNameC2(), "Venba");
+	   fill(t.getLastNameC2(), "vinoth");
+	   fill(t.getDOBC2(), "2011-04-27");
+	   
+	 
+	   
+	   System.out.println(getText(t.getDestination()));
+	  
+	   System.out.println(getText(t.getData()));
+	  
+	   System.out.println(getText(t.getPassanger()));
+	   
+	   
+	  
+	   Assert.assertEquals("30 Sep", getText(t.getData()));
+	   Assert.assertEquals("2 adults", getText(t.getPassanger()));
+	   Assert.assertEquals("OSL – RIX", getText(t.getDestination()));
+	   click(t.getData());
+	   List<WebElement> sub = driver.findElements(By.xpath("//div[@class='col-md-4 col-sm-4 col-xs-6 text-right rev UpsellBookValExpPTrvlrValShpCrt']"));
+	   int a = 0;
+	   for(int i=0;i<=sub.size()-1;i++) {
+		   WebElement sub1 = sub.get(i);
+		   String text = sub1.getText();
+		  // System.out.println("SubTotal Ammount\t"+text);
+		   String[] split = text.split(" ");
+		   String s= split[0];
+		   String r = s.replace(",", "");
+		   int p = Integer.parseInt(r);
+		   System.out.println(p);
+		   a=a+p;  
+	   }
+	   System.out.println(a);
+	   String text = getText(t.getTotal());
+	   String[] split = text.split(" ");
+	   String s=split[0];
+	   String r = s.replace(",", "");
+	   int p = Integer.parseInt(r);
+	   Assert.assertEquals(a, p);
+	   System.out.println("Total Ammount is\t"+p);
+	   System.out.println("***Travel Details Verified Successfully***");
+	   
+	   
+	   
+	   
+	   
+	   click(t.getContinue2());
+	}
 	
 
 	

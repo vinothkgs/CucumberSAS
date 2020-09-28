@@ -15,5 +15,7 @@ When user has enter the from to and provide date
 
 Then user getting correct flight list
 
+And user has enter the traveler information
+
 
 

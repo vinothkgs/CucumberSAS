@@ -15,12 +15,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+
+import cucumber.api.Argument;
 
 public class Base {
 	public static WebDriver driver;
@@ -33,7 +36,7 @@ public class Base {
 	
 	
 	public static  WebDriver getDriverAccesFireFox() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\bebom\\eclipse-workspaces-new\\AfterLockDown\\CucumberSAS\\Drivers\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\ELCOT\\eclipse-workspace\\SAS_Cucumber\\Drivers\\geckodriver.exe");
 		driver=new FirefoxDriver();
 		return driver;
 		
@@ -91,7 +94,7 @@ public class Base {
 	
 	public static String getText(WebElement i) {
 		String text = i.getText();
-		System.out.println(text);
+		
 		return text;
 	}
 	
@@ -120,6 +123,20 @@ public class Base {
 				value=String.valueOf(l1);
 			}
 		}
-		return value;}
+		return value;
+		}
+	
+	public static void dropdown(WebElement i,String a) {
+		Select s= new Select(i);
+		s.selectByVisibleText(a);
+		
+	}
+	
+	public void scrollDown(WebElement a) {
+		JavascriptExecutor js= (JavascriptExecutor)driver;
+		//js.executeScript("arguments[0].scrollIntoView(true)",a);
+		js.executeScript("arguments[0].scrollIntoView(true)", a);
+
+	}
 
 }
