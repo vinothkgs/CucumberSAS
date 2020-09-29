@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,6 +57,12 @@ public class Base {
 	
 	public static void click(WebElement loc) {
 		loc.click();
+
+	}
+	
+	public void listclicck(List<WebElement>loc,int a) {
+		WebElement w = loc.get(a);
+		w.click();
 
 	}
 	//--------------------------------------------------------------
@@ -136,6 +143,22 @@ public class Base {
 		JavascriptExecutor js= (JavascriptExecutor)driver;
 		//js.executeScript("arguments[0].scrollIntoView(true)",a);
 		js.executeScript("arguments[0].scrollIntoView(true)", a);
+
+	}
+	public void webTable(WebElement a, String b) {
+		
+		List<WebElement> flight1 = a.findElements(By.tagName("tr"));
+		for(int i=0;i<=flight1.size()-1;i++) {
+			WebElement web = flight1.get(i);
+			List<WebElement> tdata = web.findElements(By.tagName("td"));
+			for(int j=0;j<=tdata.size()-1;j++) {
+				WebElement webEle = tdata.get(j);
+				String text = webEle.getText();
+				System.out.println(text);
+				if(text.equals(b))
+					webEle.click();
+			}
+		}
 
 	}
 

@@ -12,8 +12,8 @@ public class Hooks extends Base{
 	
 	@Before
 	public void browserLaunch() {
-		getDriverAccesFireFox();
-		//getDriverAcces();
+		//getDriverAccesFireFox();
+		getDriverAcces();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		LaunchUrl("https://www.flysas.com/en/");

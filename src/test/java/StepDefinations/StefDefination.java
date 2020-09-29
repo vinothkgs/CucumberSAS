@@ -21,21 +21,37 @@ public class StefDefination extends Base {
 	@When("User has enter the from to onbard date and return date and select traveler and click search button")
 	public void user_has_enter_the_from_to_onbard_date_and_return_date_and_select_traveler_and_click_search_button() throws InterruptedException {
 		
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		h.getFrom().clear();
-		Thread.sleep(5000);
+		
 		fill(h.getFrom(), "STO");
 		Thread.sleep(5000);
 		fill(h.getTo(), "TRD");
 		click(h.getOutbound());
-		List<WebElement> trow = driver.findElements(By.tagName("tr"));
+		WebElement table = driver.findElement(By.xpath("//div[@class='left-calendar pad-r-5 pull-left large-6  medium-6 small-6 col']//following-sibling::table"));
+		List<WebElement> trow = table.findElements(By.tagName("tr"));
 		for(int i=0;i<=trow.size()-1;i++) {
-			List<WebElement> tdata = driver.findElements(By.tagName("td"));
+			WebElement row = trow.get(i);
+			List<WebElement> tdata = row.findElements(By.tagName("td"));
 			for(int j=0;j<=tdata.size()-1;j++) {
 				WebElement data = tdata.get(j);
 				String text = data.getText();
-				if(text.equals("29")) {
+				if(text.equals("30")) {
+					data.click();
+				}
+			}
+		}
+		//---------------------------------------------
+		WebElement table1 = driver.findElement(By.xpath("//div[@class='right-calendar pad-l-5 pull-left large-6  medium-6 small-6 col']//child::table"));
+		List<WebElement> trow1 = table1.findElements(By.tagName("tr"));
+		for(int i=0;i<=trow1.size()-1;i++) {
+			WebElement row = trow1.get(i);
+			List<WebElement> tdata = row.findElements(By.tagName("td"));
+			for(int j=0;j<=tdata.size()-1;j++) {
+				WebElement data = tdata.get(j);
+				String text = data.getText();
+				if(text.equals("15")) {
 					data.click();
 				}
 			}
@@ -49,12 +65,30 @@ public class StefDefination extends Base {
 
 	@Then("user getting corresponding flights")
 	public void user_getting_corresponding_flights() {
-		List<WebElement> time = driver.findElements(By.xpath("//span[@class='time-distance']"));
+		/*List<WebElement> time = driver.findElements(By.xpath("//span[@class='time-distance']"));
 		System.out.println("Total Flights\t"+time.size());
 		for(int i=0;i<=time.size()-1;i++) {
 			WebElement time1 = time.get(i);
 			System.out.println("Flights Timing\t"+time1.getText());
-		}
+		}*/
+		
+		/*WebElement flight = driver.findElement(By.xpath("//table[@id='outbound-upsell-table']"));
+		List<WebElement> flight1 = flight.findElements(By.tagName("tr"));
+		for(int i=0;i<=flight1.size()-1;i++) {
+			WebElement web = flight1.get(i);
+			List<WebElement> tdata = web.findElements(By.tagName("td"));
+			for(int j=0;j<=tdata.size()-1;j++) {
+				WebElement webEle = tdata.get(j);
+				String text = webEle.getText();
+				System.out.println(text);
+			}
+		}*/
+		
+		webTable(h.getFlightList(),"€312,23");
+		
+		//WebElement findElement = driver.findElement(By.xpath("//table[@id='inbound-upsell-table']"));
+		webTable(h.getReturnFlight(),"€185,92");
+		
 	}
 	@When("user has enter the from to and provide date")
 	public void user_has_enter_the_from_to_and_provide_date() throws InterruptedException {
@@ -62,6 +96,8 @@ public class StefDefination extends Base {
 		System.out.println("flight search functionality");
 		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		click(h.getOneWay());
+		scrollDown(h.getPannerText());
+	
 		h.getFrom().clear();
 		fill(h.getFrom(), "oslo");
 		Thread.sleep(3000);
@@ -97,6 +133,11 @@ public class StefDefination extends Base {
 	public void user_getting_correct_flight_list() throws InterruptedException {
 		List<WebElement> flightList = driver.findElements(By.xpath("//span[@class='time-distance']"));
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		
+		if(h.getCokies().size()==1){
+			listclicck(h.getCokies(),0);
+		}
+		scrollDown(h.getParagraph());
 		/* System.out.println("Number of Flight"+"\t"+flightList.size());
 		 for(int i=0;i<=flightList.size()-1;i++) {
 				WebElement time1 = flightList.get(i);
@@ -113,13 +154,13 @@ public class StefDefination extends Base {
 				for(int k=0;k<=td.size()-1;k++) {
 					WebElement tdata = td.get(k);
 					System.out.println(tdata.getText());
-					if(tdata.getText().equals("€197,82")) 
+					if(tdata.getText().equals("€197,78")) 
 						tdata.click();
 					}
 				
 			}
 			
-			driver.findElement(By.xpath("//button[@id='return-button-cart']")).click();
+			click(h.getCont());
 			}
 			
 		

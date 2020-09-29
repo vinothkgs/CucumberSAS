@@ -1,5 +1,7 @@
 package POM;
 
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -87,10 +89,83 @@ public class Home extends Base {
 	
 	@FindBy(xpath="//button[@id='OW']")
 	private WebElement oneWay;
+	
+	@FindBy(id="policy-accept")
+	private List<WebElement> cokies;
+	
+	@FindBy(xpath="//button[@id='return-button-cart']")
+	private WebElement cont;
+	
+	@FindBy(xpath="(//p[@class='mrgn-t-5 font-12 text-white text-center'])[2]")
+	private WebElement paragraph;
+	
+	@FindBy(xpath="//h2[@style='text-align: center;']")
+	private WebElement pannerText;
+	
+	@FindBy(xpath="//div[@class='left-calendar pad-r-5 pull-left large-6  medium-6 small-6 col']//following-sibling::table")
+	private WebElement onboardDate;
+	
+	@FindBy(xpath="//table[@id='inbound-upsell-table']")
+	private WebElement returnFlight;
+	
+	@FindBy(xpath="//table[@id='outbound-upsell-table']")
+	private WebElement flightList;
+	
+	
 	//--------------------------------------------------------------------------------------------------------
 
+	
 	public WebElement getFrom() {
 		return from;
+	}
+	
+	
+
+
+	public WebElement getFlightList() {
+		return flightList;
+	}
+
+
+
+
+	public WebElement getReturnFlight() {
+		return returnFlight;
+	}
+
+
+
+
+	public WebElement getOnboardDate() {
+		return onboardDate;
+	}
+
+
+
+
+	public WebElement getPannerText() {
+		return pannerText;
+	}
+
+
+
+
+	public WebElement getParagraph() {
+		return paragraph;
+	}
+
+
+
+
+	public WebElement getCont() {
+		return cont;
+	}
+
+
+
+
+	public List<WebElement> getCokies() {
+		return cokies;
 	}
 
 
@@ -200,6 +275,9 @@ public class Home extends Base {
 	public WebElement getOneWay() {
 		return oneWay;
 	}
+	
+	
+	
 	
 	
 	
